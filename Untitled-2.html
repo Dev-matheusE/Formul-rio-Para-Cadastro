@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin: 0 auto;            
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+             border-bottom: 1px solid #ccc;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            max-width: 150px;
+            white-space: normal;
+        }
+
+        th {
+            background-color: #28a745;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .delete-icon {
+            cursor: pointer;
+            color: red;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+
+            th,
+            td {
+                font-size: 14px;
+                
+            }
+
+            .delete-icon {
+                font-size: 16px;
+
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Lista de Dados do Usuário</h1>
+        <div style="overflow-x: auto;"> 
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
+                        <th>Endereço</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be populated here -->
+                </tbody>
+            </table>
+        </div>
+        <p><a href="Untitled-1.html">Voltar para página de Registro</a></p>
+    </div>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const dataTableBody = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+
+        users.forEach((user, index) => {
+            const row = dataTableBody.insertRow();
+            row.insertCell(0).textContent = user.name;
+            row.insertCell(1).textContent = user.email;
+            row.insertCell(2).textContent = user.phone;
+            row.insertCell(3).textContent = user.address;
+
+           
+            const deleteCell = row.insertCell(4);
+            const deleteIcon = document.createElement('span');
+            deleteIcon.textContent = '🗑️'; 
+            deleteIcon.className = 'delete-icon';
+            deleteIcon.onclick = function () {
+                deleteUser(index);
+            };
+            deleteCell.appendChild(deleteIcon);
+        });
+
+        if (users.length === 0) {
+            const row = dataTableBody.insertRow();
+            const cell = row.insertCell(0);
+            cell.colSpan = 5;
+            cell.textContent = 'Não Contém Nenhum Dado';
+            cell.style.textAlign = 'center';
+        }
+    });
+
+    function deleteUser(index) {
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        users.splice(index, 1); 
+        localStorage.setItem('users', JSON.stringify(users)); 
+        location.reload(); 
+    }
+</script>
+
+
+</html>

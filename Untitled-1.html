@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de usuario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0de5a8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #7cf49a;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input {
+            width: 96%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color:#14c3a2;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #595b5a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Registro de Usuário</h1>
+        <form id="registrationForm">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+
+            <label for="phone">Telefone:</label>
+            <input type="tel" id="phone" required>
+
+            <label for="address">Endereço:</label>
+            <input type="text" id="address" required>
+
+            <button type="button" id="saveButton">Salvar</button>
+            <button type="button" id="clearButton">Apagar</button>
+        </form>
+        <p><a href="Untitled-2.html">Ir Para Próxima Página</a></p>
+    </div>
+
+    <script>
+        document.getElementById('saveButton').addEventListener('click', function() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+
+            if (name && email && phone && address) {
+                const userData = {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    address: address
+                };
+
+                let users = JSON.parse(localStorage.getItem('users')) || [];
+                users.push(userData);
+                localStorage.setItem('users', JSON.stringify(users));
+
+                alert('Seus Dados foram Salvos');
+                document.getElementById('registrationForm').reset();
+            } else {
+                alert('Preencha todos os campos, Por Gentileza.');
+            }
+        });
+
+        document.getElementById('clearButton').addEventListener('click', function() {
+            document.getElementById('registrationForm').reset();
+        });
+    </script>
+</body>
+</html>
